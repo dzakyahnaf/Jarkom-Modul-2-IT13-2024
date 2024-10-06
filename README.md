@@ -26,7 +26,7 @@ echo nameserver 10.70.1.3 >> /etc/resolv.conf
 
 ### Buat Topologi
 
-![alt text](image.png)
+![alt text](Topologi.png)
 
 ## Pengerjaan Soal
 
