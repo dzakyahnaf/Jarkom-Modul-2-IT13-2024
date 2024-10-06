@@ -460,3 +460,47 @@ www     IN      CNAME   panah.pasopati.it13.com.
 ```
 4. Lakukan restart pada bind9 `service bind9 restart`
 
+## NO. 10
+Majapahit = DNS Slave 
+1. Lakukan Perubahan pada `/etc/bind/panah/panah.pasopati.it13.com`
+2. Pada bagian kali ini kita harus menambahkan subdomain log dan CNAME yang baru. Namun ada yang membedakan yaitu diperlukannya `www.log` bukan hanya `www` pada umumnya
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     panah.pasopati.it13.com. root.panah.pasopati.it13.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      panah.pasopati.it13.com.
+@       IN      A       10.70.1.6
+@       IN      AAAA    ::1
+www     IN      CNAME   panah.pasopati.it13.com.
+log     IN      A       10.70.1.6
+www.log IN      CNAME   panah.pasopati.it13.com.
+```
+3. Lakukan restart bind9 `service bind9 restart`
+
+## NO. 11
+Majapahit = DNS Slave 
+1. Lakukan perubahan pada `/etc/bind/named.conf.options` yaitu dengan menambahkan dns forwarder
+```
+options {
+    directory "/var/cache/bind";
+
+    forwarders {
+        192.168.152.1;
+    }
+
+    //dnssec-validation auto;
+    allow-query{any;};
+
+    auth-nxdomain no;    # conform to RFC1035
+    listen-on-v6 { any; };
+```
+2. Lakukan restart pada bind9 `service bind9 restart`
+
