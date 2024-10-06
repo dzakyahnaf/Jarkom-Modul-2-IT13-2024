@@ -278,7 +278,7 @@ ping www.rujapala.it13.com -c 4
 ![alt text](image-6.png)
 
 ## NO.6
-1. Masuk ke Sriwijaya DNS dengan `nano /etc/bind/named.conf.local`
+1. Tambahkan ke file `/etc/bind/named.conf.local`
 2. Memasukkan Pointer Record dari Kota Lingga
    ```
    zone "1.70.10.in-addr.arpa" {
