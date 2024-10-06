@@ -501,6 +501,10 @@ www.log IN      CNAME   panah.pasopati.it13.com.
 ```
 3. Lakukan restart bind9 `service bind9 restart`
 
+# Hasil Uji Ping 
+Pada `log.panah.pasopati.it13.com` dan `www.log.panah.pasopati.it13.com`
+![alt text](image-12.png)
+
 ## NO. 11
 Majapahit = DNS Slave 
 1. Lakukan perubahan pada `/etc/bind/named.conf.options` yaitu dengan menambahkan dns forwarder
@@ -519,6 +523,9 @@ options {
     listen-on-v6 { any; };
 ```
 2. Lakukan restart pada bind9 `service bind9 restart`
+
+# Dilakukan test client dengan memakai internet 
+![alt text](image-13.png)
 
 ## NO.12
 # Kotalingga = Web Server {10.70.1.6}
