@@ -543,5 +543,6 @@ rm /var/www/html/index.html
 ```
 Keterangan Tambahan 
 Perintah `cp /var/www/pasopati.it13.com/index.php /var/www/html/index.php` dan `rm /var/www/html/index.html` digunakan agar kita bisa mengakses `lynx pasopati.it13.com` dan `lynx 10.70.1.6`
+
 5. Lakukan Restart pada apache `service apache2 restart`
 
