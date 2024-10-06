@@ -389,6 +389,9 @@ cakra   IN      A       10.70.1.5
 ```
 2. Lakukan Restart bind9 `service bind9 restart`
 
+Test 
+![alt text](image-10.png)
+
 ## NO. 9 
 Sriwijaya = DNS Master
 1. Melakukan perubahan pada `/etc/bind/it13/pasopati.it13.com`
@@ -471,6 +474,8 @@ www     IN      CNAME   panah.pasopati.it13.com.
 ```
 4. Lakukan restart pada bind9 `service bind9 restart`
 
+# Test Untuk Subdomain Tersebut 
+![alt text](image-11.png)
 ## NO. 10
 Majapahit = DNS Slave 
 1. Lakukan Perubahan pada `/etc/bind/panah/panah.pasopati.it13.com`
