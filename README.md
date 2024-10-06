@@ -377,3 +377,86 @@ www     IN      CNAME   sudarsana.it13.com.
 cakra   IN      A       10.70.1.5
 ```
 2. Lakukan Restart bind9 `service bind9 restart`
+
+## NO. 9 
+Sriwijaya = DNS Master
+1. Melakukan perubahan pada `/etc/bind/it13/pasopati.it13.com`
+2. Memberikan kewenangan pada DNS Slave yaitu Majapahit `10.70.3.2`
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     pasopati.it13.com. root.pasopati.it13.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      pasopati.it13.com.
+@       IN      A       10.70.1.6
+@       IN      AAAA    ::1
+www     IN      CNAME   pasopati.it13.com.
+ns1     IN      A       10.70.3.2
+panah   IN      NS      ns1
+```
+3. Melakukan perubahan pada `/etc/bind/named.conf.options`
+```
+options {
+    directory "/var/cache/bind";
+    //dnssec-validation auto;
+    allow-query{any;};
+
+    auth-nxdomain no;    # conform to RFC1035
+    listen-on-v6 { any; };
+```
+4. Lakukan restart bind9 `service bind9 restart`
+# Bagian 2 
+Majapahit = DNS Slave 
+1. Lakukan Perubahan pada `/etc/bind/named.conf.local`
+```
+zone "sudarsana.it13.com" {
+    type slave;
+    masters { 10.70.1.2; };
+    file "/var/lib/bind/sudarsana.it13.com";
+};
+
+zone "pasopati.it13.com" {
+    type slave;
+    masters { 10.70.1.2; };
+    file "/var/lib/bind/pasopati.it13.com";
+};
+
+zone "rujapala.it13.com" {
+    type slave;
+    masters { 10.70.1.2; };
+    file "/var/lib/bind/rujapala.it13.com";
+};
+
+zone "panah.pasopati.it13.com" {
+    type master;
+    file "/etc/bind/panah/panah.pasopati.it13.com";
+};
+```
+2. Buatlah sebuah direktori dengan path sebagai berikut `/etc/bind/panah`
+3. Lakukan perubahan pada `panah.pasopati.it13.com` yang mengarah pada kotalingga `10.70.1.6`
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     panah.pasopati.it13.com. root.panah.pasopati.it13.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      panah.pasopati.it13.com.
+@       IN      A       10.70.1.6
+@       IN      AAAA    ::1
+www     IN      CNAME   panah.pasopati.it13.com.
+```
+4. Lakukan restart pada bind9 `service bind9 restart`
+
