@@ -504,3 +504,16 @@ options {
 ```
 2. Lakukan restart pada bind9 `service bind9 restart`
 
+## NO.12
+# Kotalingga = Web Server {10.70.1.6}
+1. Lakukan setup untuk menggunakan apache
+```
+apt-get update
+apt-get install apache2 libapache2-mod-php7.0 php wget unzip -y
+```
+2. Menyesuaikan config apache dengan template yang disediakan soal
+```
+cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/pasopati.it13.com.conf
+```
+
+
