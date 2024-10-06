@@ -306,6 +306,9 @@ $TTL    604800
 6                       IN  PTR         pasopati.it13.com.
 ``` 
    5. Lakukan restart pada bind9 `service bind9 restart`
+   6. Tes pada pointer record
+![alt text](image-7.png)
+
 ## NO.7 
 
 1. Lakukan perubahan pada Sriwijaya DNS dengan mengedit `/etc/bind/named.conf.local`
@@ -356,6 +359,14 @@ zone "rujapala.it13.com" {
 };
 ```
 5. Restart bind9 `service bind9 restart`
+
+Test 
+# Ketika Sriwijaya Mati 
+![alt text](image-8.png)
+# Tetap Dapat Melakukan Ping 
+![alt text](image-9.png)
+
+
 
 ## NO. 8 
 1. Melakukan perubahan pada DNS Rec dengan menambahkan subdomain cakra pada Bedahulu
