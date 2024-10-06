@@ -276,3 +276,32 @@ ping www.rujapala.it13.com -c 4
 ![alt text](image-5.png)
 
 ![alt text](image-6.png)
+
+## NO.6
+1. Masuk ke Sriwijaya DNS dengan `nano /etc/bind/named.conf.local`
+2. Memasukkan Pointer Record dari Kota Lingga
+   ```
+   zone "1.70.10.in-addr.arpa" {
+    type master;
+    file "/etc/bind/it13/1.70.10.in-addr.arpa";
+};```
+
+3. Membuat DNS Record 
+```cp /etc/bind/db.local /etc/bind/it13/1.70.10.in-addr.arpa```
+4. Melakukan perubahan pada DNS Record
+`
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     pasopati.it13.com. root.pasopati.it13.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+   1.70.10.in-addr.arpa.   IN  NS          pasopati.it13.com.
+6                       IN  PTR         pasopati.it13.com.
+   `
+   5. Lakukan restart pada bind9 `service bind9 restart`
