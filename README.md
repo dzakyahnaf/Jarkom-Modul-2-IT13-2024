@@ -294,7 +294,7 @@ ping www.rujapala.it13.com -c 4
 ; BIND data file for local loopback interface
 ;
 $TTL    604800
-@       IN      SOA     rujapala.it13.com. root.rujapala.it13.com. (
+@       IN      SOA     pasopati.it13.com. root.pasopati.it13.com. (
                         2023101001      ; Serial
                         604800         ; Refresh
                         86400         ; Retry
@@ -305,3 +305,74 @@ $TTL    604800
 6                       IN  PTR         pasopati.it13.com.
 ``` 
    5. Lakukan restart pada bind9 `service bind9 restart`
+## NO.7 
+
+1. Lakukan perubahan pada Sriwijaya DNS dengan mengedit `/etc/bind/named.conf.local`
+2. Lakukan perubahan sebagai berikut
+```
+zone "sudarsana.it13.com" {
+    type master;
+    notify yes;
+    file "/etc/bind/jarkom/sudarsana.it13.com";
+};
+
+zone "pasopati.it13.com" {
+    type master;
+    notify yes;
+    file "/etc/bind/jarkom/pasopati.it13.com";
+};
+
+zone "rujapala.it13.com" {
+    type master;
+    notify yes;
+    file "/etc/bind/jarkom/rujapala.it13.com";
+};
+
+zone "1.70.10.in-addr.arpa" {
+    type master;
+    file "/etc/bind/it13/1.70.10.in-addr.arpa";
+   };
+```
+3. Restart bind9 `service bind9 restart`
+4. Buat DNS Slave pada Majapahit dengan mengedit pada `/etc/bind/named.conf.local`
+```
+zone "sudarsana.it13.com" {
+    type slave;
+    masters { 10.70.1.2; };
+    file "/var/lib/bind/sudarsana.it13.com";
+};
+
+zone "pasopati.it13.com" {
+    type slave;
+    masters { 10.70.1.2; };
+    file "/var/lib/bind/pasopati.it13.com";
+};
+
+zone "rujapala.it13.com" {
+    type slave;
+    masters { 10.70.1.2; };
+    file "/var/lib/bind/rujapala.it13.com";
+};
+```
+5. Restart bind9 `service bind9 restart`
+
+## NO. 8 
+1. Melakukan perubahan pada DNS Rec dengan menambahkan subdomain cakra pada Bedahulu
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     sudarsana.it13.com. root.sudarsana.it13.com. (
+                        2023101001      ; Serial
+                        604800         ; Refresh
+                        86400         ; Retry
+                        2419200         ; Expire
+                        604800 )       ; Negative Cache TTL
+;
+@       IN      NS      sudarsana.it13.com.
+@       IN      A       10.70.2.3    
+www     IN      CNAME   sudarsana.it13.com.
+cakra   IN      A       10.70.1.5
+```
+2. Lakukan Restart bind9 `service bind9 restart`
